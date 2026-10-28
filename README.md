@@ -163,6 +163,20 @@ These came out of testing on the 20x14 sign and may differ on other signs, so ch
 - MicroPython **1.29.0** (tested on the Pico W and Pico 2 W). Older releases are untested; roughly 1.20+ is expected to work
   (`mip` install and `UART.flush()`, which is only used with `de_pin`), but that hasn't been verified.
 
+### Pins used by the Waveshare board
+
+The Pico-2CH-RS485 plugs onto the Pico's headers and passes every pin through, so all of the Pico's other GPIOs stay available to
+your own code (sensors, buttons, LEDs and so on). Only these four GPIOs are taken, assuming both channels are in use:
+
+| Channel | UART | TX | RX |
+|---|---|---|---|
+| 0 | UART0 | GP0 | GP1 |
+| 1 | UART1 | GP4 | GP5 |
+
+Keep GP0, GP1, GP4 and GP5 free of anything else, including other UART, I2C or SPI functions on those pins. If you only use one
+channel, the other channel's two pins are free to reuse. The board has automatic direction control, so it needs no direction pin
+(`de_pin` is only for other adapters). Apart from these four, it only draws power and ground from the Pico.
+
 ## Install
 
 ```
